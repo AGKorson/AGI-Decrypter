@@ -7,6 +7,16 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <StartupObject>AGI_Decrypter.Program</StartupObject>
+    <ApplicationIcon>formicon.ico</ApplicationIcon>
+
+	<AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+	<InformationalVersion>1.0.1</InformationalVersion>
+	<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="formicon.ico" />
+  </ItemGroup>
 
 </Project>
