@@ -141,7 +141,7 @@ namespace AGI_Decrypter {
         #endregion
 
         #region Methods
-        static void AddSubdirectories(TreeNode parentNode, string path) {
+        void AddSubdirectories(TreeNode parentNode, string path) {
             try {
                 foreach (var dir in Directory.GetDirectories(path)) {
                     // don't add hidden or system directories
@@ -149,12 +149,10 @@ namespace AGI_Decrypter {
                     if ((dirInfo.Attributes & (FileAttributes.Hidden | FileAttributes.System)) != 0) {
                         continue;
                     }
-                    TreeNode childNode = new TreeNode(Path.GetFileName(dir))
-                    {
-                        Tag = dir, // store full path in Tag
-                        ImageIndex = 0,
-                        SelectedImageIndex = 0
-                    };
+                    TreeNode childNode = new TreeNode(Path.GetFileName(dir));
+                    childNode.Tag = dir; // store full path in Tag
+                    childNode.ImageIndex = 0;
+                    childNode.SelectedImageIndex = 0;
                     parentNode.Nodes.Add(childNode);
                 }
             }
@@ -181,7 +179,7 @@ namespace AGI_Decrypter {
             // is always zero when decrypted, so that byte will either match
             // the keybyte (and key is fine, or it will have bit 6 cleared,
             // and it should replace the key byte.
-            // (I may need to work on this explanation so it is more clear.)
+            // (I may need to work on this explanation so itmore clear.)
 
             string folderPath = (string)FolderList.SelectedNode.Tag;
             byte[] agidata = File.ReadAllBytes(folderPath + "\\agi");
@@ -192,7 +190,7 @@ namespace AGI_Decrypter {
             // as data position 383)
             byte bytKeyEnd = agidata[127];
 
-            // rotate  key LEFT twice
+            // shift  key LEFT twice
             for (int j = 0; j < 2; j++) {
                 // the carry flag is high bit of first byte
                 carryflag = (key[0] & 128) != 0;
@@ -524,8 +522,8 @@ namespace AGI_Decrypter {
             // clear out bit 0 (AND it with '11111110')
             byte retval = (byte)(bytIn & 0xFE);
 
-            // rotate once to right
-            retval = (byte)(retval >> 1);
+            // divide by two to rotate once to right
+            retval = (byte)(retval / 2);
 
             // if carry flag is set,
             if (carryflag) {
